@@ -4,16 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Seventeen Gallery</title>
+    <title>Seventeen Odyssey</title>
+    <link rel="icon" href="assets/logo.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Bebas+Neue&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         h1,
         h3,
-        h5 {
+        h5,
+        a {
             font-family: 'Bebas Neue', sans-serif;
             letter-spacing: 1.5px;
+        }
+
+        p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
         }
 
         .fade-in {
@@ -37,45 +47,85 @@
             opacity: 1;
             transform: translateY(0) scale(1);
         }
+
+        .scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scroll-item {
+            flex: 0 0 auto;
+            width: 25%;
+            padding: 10px;
+        }
+
+        .card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .sticky-top {
+            transition: all 0.3s ease;
+        }
+
+        a {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 
-<body class="bg-dark">
+<body id="body" data-bs-theme="dark">
 
-    <div class="container-fluid p-0 bg-dark">
-        <div class="row w-100 py-4 align-items-center">
-            <div class="col text-center text-md-start ms-md-5">
-                <img src="assets/logow.png" style="width:50px;">
+    <div class="container-fluid p-0 sticky-top">
+        <div class="row align-items-center py-3 px-4">
+            <div class="col-6 col-md-4 d-flex align-items-center">
+                <a href="#svt" class="text-decoration-none me-3"><img id="logo" src="assets/logow.png" style="width:50px;"></a>
+                <h3 class="m-0 d-none d-md-block">Seventeen Odyssey</h3>
             </div>
-            <div class="col text-center">
-                <h3 class="text-light m-0">Seventeen Masterpiece</h3>
-            </div>
-            <div class="col text-end me-md-5">
-                <h3 class="text-light m-0">Era</h3>
+            <div class="col-6 col-md-8 d-flex justify-content-end align-items-center">
+                <a href="#journey"  class="alinks text-decoration-none me-4">About</a>
+                <a href="#musics" class="alinks text-decoration-none me-4">Musics</a>
+                <button class="btn btn-secondary btn-sm d-flex align-items-center" onclick="changeTheme()">
+                    <i id="theme-icon" class="bi bi-moon-fill me-1"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0" id="svt">
         <div class="row m-0 p-0 d-flex align-items-center justify-content-center"
             style="background: url('assets/display.jpg') center/cover no-repeat; height: 800px; width: 100%;">
         </div>
     </div>
 
-    <div class="container-fluid bg-dark text-light py-4">
+    <div class="container-fluid py-4">
         <div class="row">
             <div class="col">
                 <h1 class="display-1 text-center my-5">Inside Seventeen</h1>
-                <p class="text-center m-0" style="font-family: 'Poppins', sans-serif; font-size: 1.25rem;">
+                <p class="text-center m-0" style="font-size: 1.25rem;">
                     A team of thirteen lights.
                 </p>
             </div>
         </div>
-
         <div class="row g-2" id="members-container"></div>
     </div>
 
-    <div class="container-fluid bg-dark text-light py-4">
+    <div class="container-fluid py-4" id="journey">
         <div class="row">
             <div class="col">
                 <h1 class="display-1 text-center my-5">Journey of Seventeen</h1>
@@ -87,75 +137,156 @@
         <div class="row" id="content"></div>
     </div>
 
-    <div class="container-fluid bg-dark text-light py-4">
+    <div class="container-fluid py-4" id="musics">
+        <h1 class="display-1 text-center my-5">Sound of Seventeen</h1>
+        <p class="text-center m-0" style="font-size: 1.25rem;">
+            Soulful Tunes Curated for Carats
+        </p>
         <div class="row">
-            <div class="col">
-                <h1 class="display-1 text-center my-5">The Sound of Seventeen</h1>
-                <p class="text-center m-0" style="font-family: 'Poppins', sans-serif; font-size: 1.25rem;">
-                    Every album, a new story and a different era.
+            <div class="col-md-9 mx-auto">
+                <div class="row" id="albums"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-1 my-5">Mini Singles</h1>
+                <p class="m-0" style="font-size: 1.25rem;">
+                    Explore Seventeen's mini singles collection.
                 </p>
             </div>
-            <div class="col" id="albums"></div>
+        </div>
+        <div class="row mt-4" style="border: 2px solid rgba(0,0,0,0.15); border-radius: 15px; padding: 15px;">
+            <div class="col-12">
+                <div class="scroll-container py-3">
+                    <div class="d-flex" id="mini-singles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-3">
+                <div class="mb-2">
+                    <a href="https://www.instagram.com/saythename_17/" target="_blank" class="me-4 fs-4"><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="https://x.com/pledis_17" target="_blank" class="me-4 fs-4"><i
+                            class="bi bi-twitter"></i></a>
+                    <a href="https://www.youtube.com/@pledis17" target="_blank" class="me-4 fs-4"><i
+                            class="bi bi-youtube"></i></a>
+                </div>
+                <p class="small mb-0">
+                    &copy; 2025 Seventeen Gallery. STAN SEVENTEEN!
+                </p>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="data.js"></script>
-
     <script>
         var container = document.getElementById("members-container");
-
         for (var i = 0; i < members.length; i++) {
             container.innerHTML += `
                 <div class="col-6 col-md-4 col-lg-2 p-5 fade-in">
-                    <img src="${members[i].picture}" style="width:100%; height:100%; object-fit:cover; border-radius:8px; box-shadow: 0 4px 10px rgba(255, 255, 255, 0.15), 0 6px 20px rgba(255, 255, 255, 0.1);">
-                    <div class="text-center mt-2 text-light">
+                    <img src="${members[i].picture}"
+                        style="width:100%; height:100%; object-fit:cover; border-radius:8px;
+                        box-shadow:0 4px 10px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.1);">
+                    <div class="text-center mt-2">
                         <h5>${members[i].name}</h5>
                         <p>${members[i].position || ""}</p>
                     </div>
-                </div>
-            `;
+                </div>`;
         }
 
         var content = document.getElementById("content");
         for (var i = 0; i < users.length; i++) {
             content.innerHTML += `
                 <div class="col-6 col-md-4 col-lg-3 p-5 g-3 slide-up">
-                    <div class="card" style="box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3), 0 12px 40px rgba(255, 255, 255, 0.2); border-radius: 8px;">
-                        <img src="${users[i].picture}" class="card-img-top" style="width:100%; height:250px; object-fit:cover; border-radius:15px 15px 0 0;">
+                    <div class="card">
+                        <img src="${users[i].picture}" class="card-img-top"
+                            style="width:100%; height:250px; object-fit:cover; border-radius:15px 15px 0 0;">
                         <div class="card-body">
                             <h5 class="card-title text-center">${users[i].title} (${users[i].year})</h5>
                             <p class="card-text text-center" style="font-size:0.8rem;">${users[i].desc}</p>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
         }
 
-        
-        function animateOnScroll(className) {
-            const elements = document.querySelectorAll(className);
-            const windowBottom = window.innerHeight + window.scrollY;
+        var albumsContainer = document.getElementById("albums");
+        for (var i = 0; i < albumsData.length; i++) {
+            albumsContainer.innerHTML += `
+            <div class="col-6 col-md-4 col-lg-4 p-4 slide-up">
+            <div class="card">
+                <img src="${albumsData[i].era}" class="card-img-top" style="width:100%; height:100%; object-fit:cover; border-radius:12px 12px 0 0;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">${albumsData[i].album_era_title}</h5>
+                    <h6>${albumsData[i].album_era_date}</h6>
+                    <a href="${albumsData[i].link}" target="_blank" class="btn btn-primary">Stream Now</a>
+                </div>
+            </div>
+        </div>`;
+        }
 
+        var miniSinglesContainer = document.getElementById("mini-singles");
+        single.forEach(item => {
+            miniSinglesContainer.innerHTML += `
+        <div class="scroll-item">
+            <div class="card">
+                <img src="${item.img}" class="card-img-top" style="width:100%; height:100%; object-fit:cover; border-radius:12px 12px 0 0;" alt="${item.title}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">${item.title}</h5>
+                    <h6>${item.single_date}</h6>
+                    <a href="${item.link}" class="btn btn-primary btn-sm" target="_blank">Stream Now</a>
+                </div>
+            </div>
+        </div>`;
+        });
+
+        var body = document.getElementById("body");
+        var logo = document.getElementById("logo");
+        var themeIcon = document.getElementById("theme-icon");
+        var alinks = document.querySelectorAll(".alinks");
+        var theme = "dark";
+
+        function changeTheme() {
+            theme = theme === "light" ? "dark" : "light";
+            body.setAttribute("data-bs-theme", theme);
+
+            if (theme === "dark") {
+                logo.src = "assets/logow.png";
+                themeIcon.className = "bi bi-moon-fill me-1";
+                alinks.forEach(link => link.style.color = "white");
+            } else {
+                logo.src = "assets/logo.png";
+                themeIcon.className = "bi bi-sun-fill me-1";
+                alinks.forEach(link => link.style.color = "black");
+            }
+        }
+        function animateOnScroll(selector) {
+            const elements = document.querySelectorAll(selector);
+            const windowBottom = window.innerHeight + window.scrollY;
             elements.forEach((el, index) => {
-                const elTop = el.offsetTop + 50;
-                if (windowBottom > elTop) {
-                    setTimeout(() => el.classList.add('visible'), index * 100);
+                if (windowBottom > el.offsetTop + 50) {
+                    setTimeout(() => el.classList.add("visible"), index * 100);
                 }
             });
         }
 
-        window.addEventListener('scroll', () => {
-            animateOnScroll('.fade-in');
-            animateOnScroll('.slide-up');
+        window.addEventListener("scroll", () => {
+            animateOnScroll(".fade-in");
+            animateOnScroll(".slide-up");
         });
 
-        window.addEventListener('load', () => {
-            animateOnScroll('.fade-in');
-            animateOnScroll('.slide-up');
+        window.addEventListener("load", () => {
+            animateOnScroll(".fade-in");
+            animateOnScroll(".slide-up");
         });
     </script>
-
 </body>
 
 </html>
